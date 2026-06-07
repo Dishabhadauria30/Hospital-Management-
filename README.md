@@ -90,18 +90,7 @@ hospital-recovery-analytics/
 │
 └── README.md
 ```
----
-🚀 Getting Started
-Prerequisites
-```bash
-pip install pandas numpy matplotlib seaborn scipy scikit-learn openpyxl
-```
-Run the Analysis
-```bash
-git clone https://github.com/yourusername/hospital-recovery-analytics.git
-cd hospital-recovery-analytics
-python hospital_analysis.py
-```
+--- 
 **Output charts will be saved to the `outputs/` folder. The terminal will also print a full insight report.**
 
 ---
