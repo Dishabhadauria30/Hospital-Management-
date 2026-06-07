@@ -6,6 +6,24 @@
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-ML_Clustering-F7931E?logo=scikit-learn&logoColor=white)
 ![pandas](https://img.shields.io/badge/pandas-Data_Wrangling-150458?logo=pandas&logoColor=white)
 ![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
+
+---
+
+hospital-recovery-analytics/
+│
+├── hospital_analysis.py              # Main analysis script (all charts + insights)
+├── Hospital_Dashboard_in_Excel.xlsx  # Source data + Excel pivot dashboard
+├── hospital_dashboard_on_powerbi.pdf # Power BI report export
+│
+├── outputs/
+│   ├── 01_executive_dashboard.png    # KPI banner + 6-panel overview
+│   ├── 02_statistical_insights.png   # ANOVA, correlation, violin plots
+│   └── 03_ml_clustering.png          # K-Means elbow, PCA scatter, cluster profiles
+│
+└── README.md
+
+
+
 ---
 **Project Overview**
 
