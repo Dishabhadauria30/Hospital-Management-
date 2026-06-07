@@ -28,31 +28,26 @@ Visualization	3-figure Python dashboard (9 charts), Power BI interactive report,
 
 ---
 **1. Therapy is the Most Recovery-Efficient Treatment**
-
 ---
 When measuring Recovery Score per Hospital Day, Therapy outperforms Surgery, Medication, and Observation — suggesting it produces faster, more durable outcomes relative to length of stay.
-**2. Cardiology Has the Highest High-Performer Rate**
 
---
+**2. Cardiology Has the Highest High-Performer Rate**
+---
 45.8% of Cardiology patients achieve a Recovery Score ≥ 80, compared to only 26.3% in Orthopedics — a near 20-point gap that warrants protocol benchmarking across departments.
 
 **3. Higher Cost ≠ Better Recovery**
-
---
+---
 Pearson correlation between Treatment Cost and Recovery Score is r = 0.089 (p = 0.21) — statistically non-significant. Spending more does not reliably improve outcomes. This is a critical insight for cost-optimization strategies.
 
 **4. Dr. M. Patel Leads in Recovery Outcomes**
-
 ---
 Among all doctors, Dr. M. Patel achieves the highest average recovery score (73.2), consistently outperforming the overall average of 70.4. This creates an opportunity for peer learning and best-practice sharing.
 
 **5. Children/Teens Recover Fastest**
-
---
+---
 Age-banded analysis reveals the youngest cohort (under 18) recovers most effectively. Recovery scores decline progressively with age, with Senior patients (60+) scoring ~8 points lower on average.
 
 **6. ML Identifies 4 Distinct Patient Profiles**
-
 ---
 K-Means (k=4) segmentation uncovers clinically meaningful patient archetypes:
 Segment	Profile
@@ -62,8 +57,7 @@ Young Quick Responders	Mid-range cost, high recovery efficiency
 Elderly Complex Cases	Long stays, multiple treatment types, moderate recovery
 
 **7. Neurology and Orthopedics Need Attention**
-
---
+---
 Both departments show the lowest high-performer rates (<30%) and below-average Recovery Efficiency scores — flagging these as priority areas for protocol review.
 
 ---
