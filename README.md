@@ -9,6 +9,8 @@
 
 ---
 
+Project Structure
+```
 hospital-recovery-analytics/
 │
 ├── hospital_analysis.py              # Main analysis script (all charts + insights)
@@ -21,7 +23,8 @@ hospital-recovery-analytics/
 │   └── 03_ml_clustering.png          # K-Means elbow, PCA scatter, cluster profiles
 │
 └── README.md
-
+```
+---
 
 
 ---
