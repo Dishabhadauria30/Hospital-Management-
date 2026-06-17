@@ -62,10 +62,10 @@ Elderly Complex Cases	Long stays, multiple treatment types, moderate recovery
 ---
 Both departments show the lowest high-performer rates (<30%) and below-average Recovery Efficiency scores flagging these as priority areas for protocol review.
 
-
+---
 **Tools & Technologies**
 
----
+
 Category	Tool
 Languages	Python 3.10+
 Data Wrangling	`pandas`, `numpy`
@@ -97,22 +97,22 @@ hospital-recovery-analytics/
 ---
 **Recommendations (For Clinical Decision-Making)**
 
-----
-Standardize Therapy protocols across departments — it yields the best recovery-per-day ratio.
 
-Audit Orthopedics and Neurology — below-average outcomes despite comparable costs suggest protocol gaps.
+Standardize Therapy protocols across departments it yields the best recovery-per-day ratio.
+
+Audit Orthopedics and Neurology below-average outcomes despite comparable costs suggest protocol gaps.
 Deploy Dr. Patel's case-management approach as a training baseline for lower-performing peers.
 
-Use ML segmentation to triage incoming patients — fast-responder profiles can be treated in shorter stays, freeing beds for complex cases.
+Use ML segmentation to triage incoming patients  fast-responder profiles can be treated in shorter stays, freeing beds for complex cases.
 
-Stop conflating cost with quality — the near-zero cost-recovery correlation confirms that higher spend is not a proxy for better outcomes. Budget allocation should target treatment type and doctor assignment instead.
+Stop conflating cost with quality  the near-zero cost-recovery correlation confirms that higher spend is not a proxy for better outcomes. Budget allocation should target treatment type and doctor assignment instead.
 
-Build age-adjusted recovery benchmarks — comparing a Senior's 60-point score to a Child's 85-point score on the same scale is clinically misleading.
-
+Build age-adjusted recovery benchmarks comparing a Senior's 60-point score to a Child's 85-point score on the same scale is clinically misleading.
+---
  
 **Skills Demonstrated**
 
---
+
 End-to-end data analytics pipeline design
 Statistical hypothesis testing (ANOVA, Pearson r) with interpretation
 Unsupervised machine learning (K-Means, PCA) applied to healthcare data
