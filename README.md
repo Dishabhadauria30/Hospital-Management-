@@ -8,117 +8,336 @@
 ![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
 
 
+# 🏥 Hospital Patient Recovery Analysis
 
-**Project Overview**
+<div align="center">
 
----
-This project performs a full-stack analytics pipeline on a 200-patient hospital dataset from raw Excel data through statistical hypothesis testing to unsupervised machine learning  and surfaces findings through both a Python-generated multi-panel dashboard and a Power BI interactive report.
-The dataset covers 6 departments, 5 doctors, and 4 treatment types, tracking recovery scores, treatment costs, hospital stay duration, patient demographics, and more.
+![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-F37626?style=for-the-badge&logo=jupyter&logoColor=white)
+![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-ML-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-Data-150458?style=for-the-badge&logo=pandas&logoColor=white)
+![Status](https://img.shields.io/badge/Status-Complete-brightgreen?style=for-the-badge)
 
-**What This Project Does**
+**End-to-end data science project** · Exploratory Data Analysis · Statistical Hypothesis Testing · Machine Learning Regression
 
----
-Layer	What Happens
-Data Engineering	Feature engineering  Recovery Efficiency, Cost per Day, Age Bands, High-Performer flag
-Exploratory Analysis	KPI summary, distribution analysis, cross-dimensional breakdowns
-Statistical Testing	One-way ANOVA (departmental recovery), Pearson correlation (cost vs. recovery)
-Machine Learning	K-Means clustering with elbow method, PCA dimensionality reduction, patient segmentation
-Visualization	3-figure Python dashboard (9 charts), Power BI interactive report, Excel pivot tables
+[Overview](#-project-overview) · [Dataset](#-dataset) · [EDA](#-exploratory-data-analysis) · [Statistics](#-statistical-analysis) · [ML Models](#-machine-learning) · [Results](#-key-results) · [Setup](#-setup)
 
----
-**Key Findings & Insights**
-
-
-**1. Therapy is the Most Recovery-Efficient Treatment**
----
-When measuring Recovery Score per Hospital Day, Therapy outperforms Surgery, Medication, and Observation — suggesting it produces faster, more durable outcomes relative to length of stay.
-
-**2. Cardiology Has the Highest High-Performer Rate**
----
-45.8% of Cardiology patients achieve a Recovery Score ≥ 80, compared to only 26.3% in Orthopedics a near 20-point gap that warrants protocol benchmarking across departments.
-
-**3. Higher Cost ≠ Better Recovery**
----
-Pearson correlation between Treatment Cost and Recovery Score is r = 0.089 (p = 0.21) statistically non-significant. Spending more does not reliably improve outcomes. This is a critical insight for cost-optimization strategies.
-
-**4. Dr. M. Patel Leads in Recovery Outcomes**
----
-Among all doctors, Dr. M. Patel achieves the highest average recovery score (73.2), consistently outperforming the overall average of 70.4. This creates an opportunity for peer learning and best-practice sharing.
-
-**5. Children/Teens Recover Fastest**
----
-Age-banded analysis reveals the youngest cohort (under 18) recovers most effectively. Recovery scores decline progressively with age, with Senior patients (60+) scoring ~8 points lower on average.
-
-**6. ML Identifies 4 Distinct Patient Profiles**
----
-K-Means (k=4) segmentation uncovers clinically meaningful patient archetypes:
-Segment	Profile
-Low-Cost Rapid Recovery	Young patients, short stays, efficient treatment
-High-Cost Slow Recovery	Elderly, complex cases, high treatment expenditure
-Young Quick Responders	Mid-range cost, high recovery efficiency
-Elderly Complex Cases	Long stays, multiple treatment types, moderate recovery
-
-**7. Neurology and Orthopedics Need Attention**
----
-Both departments show the lowest high-performer rates (<30%) and below-average Recovery Efficiency scores flagging these as priority areas for protocol review.
-
----
-**Tools & Technologies**
-
-
-Category	Tool
-Languages	Python 3.10+
-Data Wrangling	`pandas`, `numpy`
-Statistical Analysis	`scipy.stats` (ANOVA, Pearson r, distributions)
-Machine Learning	`scikit-learn` (K-Means, PCA, StandardScaler)
-Visualization	`matplotlib`, `seaborn`
-BI & Reporting	Microsoft Power BI Desktop
-Spreadsheet Analytics	Microsoft Excel (Pivot Tables, Slicers, Charts)
-IDE	VS Code / Jupyter Notebook
+</div>
 
 ---
 
-📁 Project Structure
+## 📌 Project Overview
+
+This project performs a **comprehensive clinical data analysis** on a hospital patient treatment dataset to uncover factors that influence patient recovery. It follows a structured data science pipeline from raw data ingestion through to predictive machine learning modelling.
+
+### 🎯 Objectives
+- Understand distributions and relationships in patient-level clinical data
+- Apply rigorous statistical hypothesis tests to identify significant group differences
+- Build and compare multiple regression models to predict the **Recovery Score**
+- Derive actionable, evidence-based insights for clinical decision-making
+
+---
+
+## 📂 Dataset
+
+| Property | Detail |
+|---|---|
+| **File** | `hospital_patient_treatment_dataset.csv` |
+| **Records** | 200 patients |
+| **Features** | 9 columns |
+| **Target** | `Recovery Score` (range 40–100) |
+| **Missing Values** | ✅ None |
+
+### Feature Descriptions
+
+| Feature | Type | Description |
+|---|---|---|
+| `Patient ID` | Categorical | Unique patient identifier |
+| `Department` | Categorical | Medical department (6 departments) |
+| `Treatment Type` | Categorical | Medication / Surgery / Therapy / Observation |
+| `Doctor Name` | Categorical | Attending physician |
+| `Gender` | Categorical | Male / Female / Other |
+| `Age` | Numerical | Patient age in years (1–90) |
+| `Treatment Cost` | Numerical | Total cost in ₹ (₹5,444 – ₹1,49,340) |
+| `Hospital Stay (Days)` | Numerical | Length of inpatient stay (1–30 days) |
+| `Recovery Score` | **Target** | Patient recovery outcome (40–100) |
+
+---
+
+## 📊 Exploratory Data Analysis
+
+### Dataset Overview – Categorical Distributions
+![Dataset Overview](images/01_dataset_overview.png)
+
+> Gastroenterology leads in patient count (41), while Cardiology has the fewest (24). Treatment types are roughly balanced, with Medication slightly more common (55 patients). Gender distribution spans Male (81), Other (62), and Female (57).
+
+---
+
+### Numerical Feature Distributions
+![Numerical Distributions](images/02_numerical_distributions.png)
+
+> **Key observations:**
+> - **Age** is uniformly distributed (1–90 yrs), reflecting a diverse patient population
+> - **Treatment Cost** is right-skewed — a small subset of patients incur very high costs
+> - **Hospital Stay** is nearly uniform across 1–30 days
+> - **Recovery Score** is approximately normal (mean ≈ 70.4, std ≈ 17.7)
+
+---
+
+### Pearson Correlation Matrix
+![Correlation Heatmap](images/03_correlation_heatmap.png)
+
+> All pairwise correlations between numerical features are **weak (|r| < 0.15)**, indicating low multicollinearity and that no single feature dominates recovery prediction. This suggests non-linear relationships that tree-based models are better suited to capture.
+
+---
+
+### Recovery Score by Department
+![Recovery by Department](images/04_recovery_by_department.png)
+
+> Recovery scores are relatively consistent across departments (mean ≈ 68–73), with overlapping IQRs. Diamond markers indicate group means. ANOVA confirms no statistically significant departmental effect (see Statistical Analysis).
+
+---
+
+### Recovery Score by Treatment Type
+![Recovery by Treatment](images/05_recovery_by_treatment.png)
+
+> The violin plots reveal similar recovery distributions across all four treatment types. The width of each violin indicates density — Medication and Therapy show slightly broader spread at higher recovery values.
+
+---
+
+### Key Features vs Recovery Score
+![Scatter Plots](images/06_scatter_vs_recovery.png)
+
+> Trend lines and Pearson r values confirm that Age (r=0.041), Treatment Cost (r=0.089), and Hospital Stay (r=0.125) all have **weak, non-significant linear relationships** with Recovery Score, highlighting the complexity of recovery prediction.
+
+---
+
+### Department × Treatment Type – Mean Recovery Heatmap
+![Dept Treatment Heatmap](images/07_dept_treatment_heatmap.png)
+
+> The interaction heatmap reveals nuanced patterns invisible in univariate analysis — e.g., Oncology patients receiving Observation therapy show relatively higher mean recovery than Surgery within the same department. These interactions motivate the use of ensemble ML models.
+
+---
+
+### Age Group Analysis
+![Age Group Analysis](images/08_age_group_analysis.png)
+
+> Recovery scores (±1 std) are broadly consistent across age groups, but **Elderly patients (76+) show greater variability in treatment cost**, suggesting more complex or prolonged care needs. Children show tighter cost distributions, implying more standardised paediatric protocols.
+
+---
+
+## 📐 Statistical Analysis
+
+### Statistical Tests Summary
+![Statistical Tests](images/09_statistical_tests_summary.png)
+
+### Hypothesis Tests in Detail
+
+#### 1. 🔬 Shapiro-Wilk Normality Test
 ```
-hospital-recovery-analytics/
-│
-├── hospital_analysis.py              # Main analysis script (all charts + insights)
-├── Hospital_Dashboard_in_Excel.xlsx  # Source data + Excel pivot dashboard
-├── hospital_dashboard_on_powerbi.pdf # Power BI report export
-│
-├── outputs/
-│   ├── 01_executive_dashboard.png    # KPI banner + 6-panel overview
-│   ├── 02_statistical_insights.png   # ANOVA, correlation, violin plots
-│   └── 03_ml_clustering.png          # K-Means elbow, PCA scatter, cluster profiles
-│
-└── README.md
+H₀: Recovery Score is normally distributed
+W = 0.951, p < 0.0001 → ❌ Reject H₀ (non-normal)
+```
+Despite appearing bell-shaped, the Recovery Score distribution deviates from strict normality, justifying the use of robust non-parametric checks alongside parametric tests.
+
+---
+
+#### 2. 📊 Independent T-Test – Recovery Score by Gender
+```
+H₀: Mean Recovery Score is equal for Male and Female patients
+Levene's test: equal variances assumed
+t = 0.216, p = 0.8295 → ❌ Fail to reject H₀
+```
+**No significant difference** in recovery between male and female patients. Gender alone is not a predictor of recovery outcome in this dataset.
+
+---
+
+#### 3. 📈 One-Way ANOVA – Recovery Score by Department
+```
+H₀: Mean Recovery Score is equal across all departments
+F = 0.833, p = 0.5276 → ❌ Fail to reject H₀
+```
+No statistically significant variation in Recovery Score across departments (Gastroenterology, Pediatrics, Orthopedics, Oncology, Neurology, Cardiology). Post-hoc Tukey HSD was not required.
+
+---
+
+#### 4. 📈 One-Way ANOVA – Recovery Score by Treatment Type
+```
+H₀: Mean Recovery Score is equal across all treatment types
+Tested across: Medication, Surgery, Therapy, Observation
+```
+Results indicate treatment type does not significantly differentiate recovery outcomes at α = 0.05.
+
+---
+
+#### 5. 🔗 Correlation Analysis
+
+| Feature | Pearson r | p-value | Significant? |
+|---|---|---|---|
+| Age | 0.041 | 0.567 | ❌ No |
+| Treatment Cost | 0.089 | 0.211 | ❌ No |
+| Hospital Stay (Days) | 0.125 | 0.079 | ❌ No |
+
+> None of the numerical features show a statistically significant linear correlation with Recovery Score. This is a crucial finding — it indicates that **recovery is governed by complex, non-linear interactions**, not by any single measurable variable. This motivates the use of ensemble methods over linear regression.
+
+---
+
+#### 6. 🧮 Chi-Square Test – Department vs Treatment Type
+Tests whether treatment type selection is independent of department, revealing potential departmental treatment preferences.
+
+---
+
+## 🤖 Machine Learning
+
+### Approach
+
+A multi-model regression framework was implemented to predict `Recovery Score`, comparing linear and non-linear approaches.
+
+```
+Pipeline:
+Raw Data → Label Encoding → Train/Test Split (80/20) → StandardScaling → Model Training → Evaluation
+```
+
+### Models Trained
+
+| Model | Type | Hyperparameters |
+|---|---|---|
+| Linear Regression | Linear | Default |
+| Ridge Regression | Regularised Linear | α = 1.0 |
+| Lasso Regression | Regularised Linear | α = 1.0 |
+| Decision Tree | Non-linear | max_depth = 5 |
+| Random Forest | Ensemble | n_estimators = 200 |
+| Gradient Boosting | Ensemble | n_estimators = 100 |
+
+### Model Comparison
+![Model Comparison](images/10_model_comparison.png)
+
+### Best Model – Diagnostics
+![Model Diagnostics](images/11_best_model_diagnostics.png)
+
+### Feature Importance (Random Forest)
+![Feature Importance](images/12_feature_importance.png)
+
+---
+
+## 📋 Key Results
+
+### Model Performance Summary
+
+| Model | R² | RMSE | MAE |
+|---|---|---|---|
+| Linear Regression | -0.031 | 19.69 | 17.37 |
+| Ridge Regression | -0.031 | 19.69 | 17.38 |
+| Lasso Regression | -0.064 | 20.01 | 17.68 |
+| Decision Tree | -0.145 | 20.75 | 17.84 |
+| **Random Forest** | **-0.161** | **20.90** | **18.60** |
+| Gradient Boosting | -0.390 | 22.87 | 20.14 |
+
+> ⚠️ **Important Finding:** All models yield negative R² scores, indicating that the features in this dataset do not carry sufficient predictive signal to outperform a simple mean-baseline model for Recovery Score. This is consistent with the near-zero correlations observed during statistical analysis and underscores a key real-world insight: **recovery is inherently multi-factorial and likely driven by unmeasured clinical variables** (diagnosis severity, comorbidities, medication response, patient compliance) not present in this dataset.
+
+### 🔍 Analytical Insights
+
+| # | Finding | Evidence |
+|---|---|---|
+| 1 | Recovery Score follows a non-normal distribution | Shapiro-Wilk: p < 0.0001 |
+| 2 | Gender does not significantly affect recovery | T-test: p = 0.83 |
+| 3 | Department does not significantly affect recovery | ANOVA: F=0.83, p = 0.53 |
+| 4 | No numerical feature linearly predicts recovery | Max Pearson \|r\| = 0.125 |
+| 5 | Recovery has complex, non-linear structure | All ML models struggle |
+| 6 | Hospital Stay is the strongest (weak) numerical predictor | r = 0.125 |
+| 7 | Elderly patients show higher treatment cost variability | Age group boxplot |
+| 8 | Treatment type shows no significant recovery differential | ANOVA on treatment groups |
+
+---
+
+## 💡 Recommendations
+
+1. **Enrich the dataset** — collect diagnosis codes (ICD-10), comorbidity indices, discharge status, and medication adherence to improve ML predictive power
+2. **Apply dimensionality reduction** (PCA, UMAP) to explore latent patient subgroups that may reveal hidden recovery patterns
+3. **Investigate cost outliers** — high-cost, average-recovery patients represent optimisation targets for value-based care strategies
+4. **Department-level protocols** — although departmental differences are not statistically significant at α = 0.05, the interaction heatmap (Dept × Treatment) reveals nuanced patterns worth investigating prospectively
+5. **Extend to classification** — binarising Recovery Score (e.g., ≥ 70 = "good recovery") may yield better-performing models for clinical decision support
+
+---
+
+## 🛠️ Setup
+
+### Prerequisites
+```
+Python 3.10+
+Jupyter Notebook
+```
+
+### Installation
+
+```bash
+git clone https://github.com/Dishabhadauria30/Hospital-Recovery-Analysis.git
+cd Hospital-Recovery-Analysis
+pip install -r requirements.txt
+jupyter notebook Hospital_Recovery_Analysis.ipynb
+```
+
+### Requirements
+
+```txt
+pandas>=1.5.0
+numpy>=1.23.0
+matplotlib>=3.6.0
+seaborn>=0.12.0
+scipy>=1.10.0
+scikit-learn>=1.2.0
+statsmodels>=0.13.0
+nbformat>=5.7.0
 ```
 
 ---
-**Recommendations (For Clinical Decision-Making)**
 
+## 📁 Repository Structure
 
-Standardize Therapy protocols across departments it yields the best recovery-per-day ratio.
+```
+Hospital-Recovery-Analysis/
+│
+├── 📓 Hospital_Recovery_Analysis.ipynb   ← Main analysis notebook
+├── 📊 hospital_patient_treatment_dataset.csv
+├── 📄 README.md
+│
+└── 📁 images/
+    ├── 01_dataset_overview.png
+    ├── 02_numerical_distributions.png
+    ├── 03_correlation_heatmap.png
+    ├── 04_recovery_by_department.png
+    ├── 05_recovery_by_treatment.png
+    ├── 06_scatter_vs_recovery.png
+    ├── 07_dept_treatment_heatmap.png
+    ├── 08_age_group_analysis.png
+    ├── 09_statistical_tests_summary.png
+    ├── 10_model_comparison.png
+    ├── 11_best_model_diagnostics.png
+    └── 12_feature_importance.png
+```
 
-Audit Orthopedics and Neurology below-average outcomes despite comparable costs suggest protocol gaps.
-Deploy Dr. Patel's case-management approach as a training baseline for lower-performing peers.
-
-Use ML segmentation to triage incoming patients  fast-responder profiles can be treated in shorter stays, freeing beds for complex cases.
-
-Stop conflating cost with quality  the near-zero cost-recovery correlation confirms that higher spend is not a proxy for better outcomes. Budget allocation should target treatment type and doctor assignment instead.
-
-Build age-adjusted recovery benchmarks comparing a Senior's 60-point score to a Child's 85-point score on the same scale is clinically misleading.
 ---
- 
-**Skills Demonstrated**
 
+## 🧰 Tech Stack
 
-End-to-end data analytics pipeline design
-Statistical hypothesis testing (ANOVA, Pearson r) with interpretation
-Unsupervised machine learning (K-Means, PCA) applied to healthcare data
-Multi-panel dashboard creation with matplotlib/seaborn
-Cross-tool BI workflow (Python → Excel → Power BI)
-Feature engineering and domain-aware metric creation
-Data storytelling: translating numbers into clinical recommendations
+| Category | Tools |
+|---|---|
+| **Language** | Python 3.10 |
+| **Data Manipulation** | Pandas, NumPy |
+| **Visualisation** | Matplotlib, Seaborn |
+| **Statistical Analysis** | SciPy, Statsmodels |
+| **Machine Learning** | Scikit-Learn |
+| **Environment** | Jupyter Notebook |
 
-Build to demonstrate how data analytics can improve real-world healthcare outcomes.
+---
+
+## 👩‍💻 Author
+
+**Disha Bhadauria**  
+[GitHub](https://github.com/Dishabhadauria30)
+
+---
+
+<div align="center">
+⭐ If you found this project useful, please consider giving it a star!
+</div>
